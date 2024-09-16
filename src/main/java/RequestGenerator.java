@@ -9,23 +9,18 @@ import java.util.*;
 
 public class RequestGenerator {
 
-    private static MockBookGenerator mockBookGenerator;
     public static final String rootUri = "localhost:8080/api/v1/book";
     private static final Random random = new Random();
     private static final ObjectMapper mapper = new ObjectMapper();
     private static final Set<String> ids = new HashSet<>();
 
     public static HttpRequest generate() throws IOException, InterruptedException {
-        switch (random.nextInt(4)) {
-            case 0:
-                return generateGet();
-            case 1:
-                return generatePost();
-            case 2:
-                return generatePut();
-            case 3:
-                return generateDelete();
-        }
+        return switch (random.nextInt(4)) {
+            case 1 -> generatePost();
+            case 2 -> generatePut();
+            case 3 -> generateDelete();
+            default -> generateGet();
+        };
     }
 
     public static HttpRequest generateGet() throws IOException, InterruptedException {
